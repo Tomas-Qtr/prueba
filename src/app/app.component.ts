@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
   title = 'ctrdymas';
 
   constructor(private servicioProductos:ProductosService ){
-
+ //dnhdjfhdf
   }
   ngOnInit(): void {
     this.servicioProductos.getProducto()
