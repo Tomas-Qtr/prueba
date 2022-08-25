@@ -7,6 +7,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { MenuComponent } from './menu/menu.component';
 import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
+import { ProductosService } from './servicios/productos.service';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
-  providers: [],
+  providers: [ProductosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
