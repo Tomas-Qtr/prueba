@@ -1,0 +1,37 @@
+
+  
+<div class="container mt-5">
+   <!--  llamamos al controlador en el ts -->
+    <form [formGroup]="nuevosproducts">
+
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Ingresar nombre del producto</label>
+            <input type="text" class="form-control"  placeholder="nombre" formsControlName="nombre">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Ingresar precio del producto</label>
+            <input type="number" class="form-control"  placeholder="precio" formControlName="precio">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">ingresar descripcion del producto</label>
+            <input type="text" class="form-control"  placeholder="descripcion" formsControlName="descripcion">
+        </div>
+        <button (click)=" agregarProducto()">agregar</button>
+    </form>
+   
+</div>
+
+<div class="container">
+    <div class="row">
+        <div *ngFor="let producto of productos" class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{producto.nombre}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{producto.precio}}</h6>
+                  <p class="card-text">{{producto.descripcion}}</p>
+                 
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
