@@ -13,7 +13,15 @@ import { ProductosService } from './servicios/productos.service';
 
 export class AppComponent implements OnInit{
 
+
+
   title = 'ctrdymas';
+
+//la variable que vamoas a usar para cambiar el boton agrgar/editar
+  textoboton:string
+
+  productoselecionado:Producto
+
   //Creaos el controlador del formulario
   nuevosproducts=new FormGroup({
     nombre: new FormControl('',Validators.required),
@@ -28,32 +36,68 @@ export class AppComponent implements OnInit{
 //Hacemos un metodo que agrega productos a la base de datos y los muestra en cards
   
   agregarProducto(){
+    
     //agregamos un producto creando una variable "nuevos productos"
     if(this.nuevosproducts.valid){
       let nuevosProductos:Producto={
         //Vinculamos el controlador de formulario
-      nombre: this.nuevosproducts.value.nombre!,
-      precio: this.nuevosproducts.value.precio!,
-      descripcion:this.nuevosproducts.value.descripcion!,
+      nombre: this.nuevosproducts.value.nombre,
+      precio: this.nuevosproducts.value.precio,
+      descripcion:this.nuevosproducts.value.descripcion,
       idProdocto:""
     } 
-    //declaramos la variable en el parametro
-    this.servicioProductos.createProducto(nuevosProductos).then(producto=>{
-      alert("Producto agregado con exito")
-    })
-    .catch(error=>{
-      alert("ocurrio un error\nError: "+ error)
-    })
+      //declaramos la variable en el parametro
+      this.servicioProductos.createProducto(nuevosProductos).then(producto=>{
+        alert("Producto agregado con exito")
+      })
+      .catch(error=>{
+        alert("ocurrio un error\nError: "+ error)
+      })
     }
     else{
       alert("Hay campos vacios")
     }  
   }
+
+  actualizarProductos(){
+    //este nuevo metodo va a llamra a los datos
+    let nuevosProductos:Producto={
+      //Vinculamos el controlador de formulario
+    nombre: this.nuevosproducts.value.nombre,
+    precio: this.nuevosproducts.value.precio,
+    descripcion:this.nuevosproducts.value.descripcion,
+    idProdocto:this.productoselecionado.idProdocto
+  } 
+    //
+    this.servicioProductos.editarProducto(this.productoselecionado.idProdocto, nuevosProductos).then((resp)=>{
+      alert("Producto actualizado con exito")
+    })
+    .catch((error)=>{
+      alert('No se pudo actualizar el producto ')
+    })
+  }
+
+
+  mostarEditar(productoSeleccionado:Producto){
+
+    this.nuevosproducts.setValue({
+      nombre: productoSeleccionado.nombre,
+      descripcion: productoSeleccionado.descripcion,
+      precio: productoSeleccionado.precio,
+    }
+    
+    )
+    this.textoboton="Editar producto"
+  }
+
+  /* cargarProducto(){
+    if (this.textoboton==)
+  } */
   ngOnInit(): void {
     this.servicioProductos.getProducto().subscribe(producto=>{
       this.productos = producto;
     })
   }
- 
+  
 }
 

@@ -42,4 +42,10 @@ export class ProductosService {
     })
     
   }
+
+  editarProducto(idProdocto:string, nuevoDatos:Producto){
+    //quremos ingresar (por el parametro "idProdocto") al documento para despues subir lo nuevos datos (gracias al parametro "nuevoDatos")
+    return this.coleccionProductos.doc(idProdocto).update(nuevoDatos)
+
+  }
 }

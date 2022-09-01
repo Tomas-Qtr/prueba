@@ -6,7 +6,7 @@
 
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Ingresar nombre del producto</label>
-            <input type="text" class="form-control"  placeholder="nombre" formsControlName="nombre">
+            <input type="text" class="form-control"  placeholder="nombre" formControlName="nombre">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Ingresar precio del producto</label>
@@ -14,9 +14,9 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">ingresar descripcion del producto</label>
-            <input type="text" class="form-control"  placeholder="descripcion" formsControlName="descripcion">
+            <input type="text" class="form-control"  placeholder="descripcion" formControlName="descripcion">
         </div>
-        <button (click)=" agregarProducto()">agregar</button>
+        <button type="button" class="btn btn-primary" (click)="agregarProducto()">agregar</button>
     </form>
    
 </div>
@@ -29,6 +29,7 @@
                   <h5 class="card-title">{{producto.nombre}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">{{producto.precio}}</h6>
                   <p class="card-text">{{producto.descripcion}}</p>
+                  <button type="button" class="btn btn-primary" (click)="mostarEditar(producto)">editar</button>
                  
                 </div>
               </div>
