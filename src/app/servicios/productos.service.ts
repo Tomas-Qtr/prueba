@@ -33,7 +33,7 @@ export class ProductosService {
         const id = this.db.createId();
         nuevoProducto.idProdocto= id;
     
-        const respuesta= await this.coleccionProductos.doc().set(nuevoProducto);
+        const respuesta= await this.coleccionProductos.doc(id).set(nuevoProducto);
         resolve(respuesta)
         }
         catch(error){
@@ -47,5 +47,19 @@ export class ProductosService {
     //quremos ingresar (por el parametro "idProdocto") al documento para despues subir lo nuevos datos (gracias al parametro "nuevoDatos")
     return this.coleccionProductos.doc(idProdocto).update(nuevoDatos)
 
+  }
+
+  deleteProducto(idProdocto:string){
+    return new Promise((resolve, rejects)=>{
+      try{
+        const res = this.coleccionProductos.doc(idProdocto).delete()
+        resolve(res)
+      }
+      catch(error){
+        rejects(error)
+      }
+    })
+   
+    
   }
 }

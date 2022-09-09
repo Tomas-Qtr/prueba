@@ -33,10 +33,12 @@ export class AppComponent implements OnInit{
   constructor(private servicioProductos:ProductosService ){
  //dnhdjfhdf
   }
+
+
 //Hacemos un metodo que agrega productos a la base de datos y los muestra en cards
-  
   agregarProducto(){
     
+    this.textoboton = 'agregar producto'
     //agregamos un producto creando una variable "nuevos productos"
     if(this.nuevosproducts.valid){
       let nuevosProductos:Producto={
@@ -79,6 +81,8 @@ export class AppComponent implements OnInit{
 
 
   mostarEditar(productoSeleccionado:Producto){
+    this.textoboton = 'actualizar producto'
+    this.productoselecionado = productoSeleccionado
 
     this.nuevosproducts.setValue({
       nombre: productoSeleccionado.nombre,
@@ -88,6 +92,32 @@ export class AppComponent implements OnInit{
     
     )
     this.textoboton="Editar producto"
+  }
+
+
+  cargarProducto(){
+    if(this.textoboton === "Agregar producto"){
+      this.agregarProducto()
+    }
+    else if (this.textoboton === "Edidtar Producto"){
+      this.actualizarProductos()
+    }
+  }
+
+
+
+  //creamos una funcion que al selccionar un producto busque su id para despues eliminarlo
+  mostrarEliminarProducto(producto:Producto){
+    this.productoselecionado = producto
+  }
+  //careamos la funcion que hace eliminar el producto vinculandoce con el servicio
+  eliminarProducto(){
+    this.servicioProductos.deleteProducto(this.productoselecionado.idProdocto).then((resp)=>{
+      alert('el producto fue eliminado con exito')
+    })
+    .catch((err)=>{
+      alert('no se pudo eliminar')
+    })
   }
 
   /* cargarProducto(){
