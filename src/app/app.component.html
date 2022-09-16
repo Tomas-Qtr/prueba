@@ -31,6 +31,10 @@
                              <label for="exampleFormControlInput1" class="form-label">ingresar descripcion del producto</label>
                              <input type="text" class="form-control"  placeholder="descripcion" formControlName="descripcion">
                          </div>
+                         <div class="mb-3">
+                          <label for="exampleFormControlInput1" class="form-label">ingresar imagen del producto</label>
+                          <input type="file" class="form-control"  placeholder="imagen" accept=".jpg, .png, .gif" formControlName="descripcion">
+                      </div>
                          <button type="button" class="btn btn-primary" (click)="agregarProducto()">{{textoboton}}</button>
                      </form>
                     
