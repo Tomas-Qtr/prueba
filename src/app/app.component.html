@@ -18,7 +18,7 @@
                 <div class="container mt-5">
                     <!--  llamamos al controlador en el ts -->
                      <form [formGroup]="nuevosproducts">
-                 
+                          <img [src]="imagen" width="150" alt="sin imagen">
                          <div class="mb-3">
                              <label for="exampleFormControlInput1" class="form-label">Ingresar nombre del producto</label>
                              <input type="text" class="form-control"  placeholder="nombre" formControlName="nombre">
@@ -33,7 +33,7 @@
                          </div>
                          <div class="mb-3">
                           <label for="exampleFormControlInput1" class="form-label">ingresar imagen del producto</label>
-                          <input type="file" class="form-control"  placeholder="imagen" accept=".jpg, .png, .gif" formControlName="descripcion">
+                          <input type="file" class="form-control"  placeholder="imagen" accept=".jpg, .png, .gif" (change)="cargarImagen($event)">
                       </div>
                          <button type="button" class="btn btn-primary" (click)="agregarProducto()">{{textoboton}}</button>
                      </form>
@@ -57,6 +57,7 @@
     <div class="row">
         <div *ngFor="let producto of productos" class="col">
             <div class="card" style="width: 18rem;">
+              <img src={{producto.imagen}} class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{producto.nombre}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">{{producto.precio}}</h6>
@@ -83,7 +84,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                          <button class="btn btn-success" (click)="eliminarProducto()" data-bs-dismiss="modal"> eliminiar </button>
+                          <button class="btn btn-success" (click)="eliminarProducto(producto)" data-bs-dismiss="modal"> eliminiar </button>
                         </div>
                       </div>
                     </div>

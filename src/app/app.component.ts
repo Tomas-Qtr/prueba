@@ -13,7 +13,7 @@ import { ProductosService } from './servicios/productos.service';
 
 export class AppComponent implements OnInit{
 
-
+  imagen:string;
 
   title = 'ctrdymas';
 
@@ -26,7 +26,8 @@ export class AppComponent implements OnInit{
   nuevosproducts=new FormGroup({
     nombre: new FormControl('',Validators.required),
     precio: new FormControl(0,Validators.required),
-    descripcion: new FormControl('',Validators.required)
+    descripcion: new FormControl('',Validators.required),
+    imagen: new FormControl('', Validators.required)
 
   })
   productos:Producto[];
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit{
       nombre: this.nuevosproducts.value.nombre,
       precio: this.nuevosproducts.value.precio,
       descripcion:this.nuevosproducts.value.descripcion,
+      imagen:this.nuevosproducts.value.imagen,
       idProdocto:""
     } 
       //declaramos la variable en el parametro
@@ -68,6 +70,7 @@ export class AppComponent implements OnInit{
     nombre: this.nuevosproducts.value.nombre,
     precio: this.nuevosproducts.value.precio,
     descripcion:this.nuevosproducts.value.descripcion,
+    imagen:this.nuevosproducts.value.imagen,
     idProdocto:this.productoselecionado.idProdocto
   } 
     //
@@ -88,6 +91,7 @@ export class AppComponent implements OnInit{
       nombre: productoSeleccionado.nombre,
       descripcion: productoSeleccionado.descripcion,
       precio: productoSeleccionado.precio,
+      imagen: productoSeleccionado.imagen
     }
     
     )
@@ -111,7 +115,8 @@ export class AppComponent implements OnInit{
     this.productoselecionado = producto
   }
   //careamos la funcion que hace eliminar el producto vinculandoce con el servicio
-  eliminarProducto(){
+  eliminarProducto(producto:Producto){
+    this.productoselecionado = producto
     this.servicioProductos.deleteProducto(this.productoselecionado.idProdocto).then((resp)=>{
       alert('el producto fue eliminado con exito')
     })
@@ -120,9 +125,19 @@ export class AppComponent implements OnInit{
     })
   }
 
-  /* cargarProducto(){
-    if (this.textoboton==)
-  } */
+  cargarImagen(event:any){
+    let archivo = event.target.files[0]
+    let reader = new FileReader()
+    if(archivo!=undefined){
+      reader.readAsDataURL(archivo)
+      reader.onloadend = () =>{
+        let url = reader.result
+        if (url!=null){
+          this.imagen =url.toString()
+        }
+      }
+    }
+  }
   ngOnInit(): void {
     this.servicioProductos.getProducto().subscribe(producto=>{
       this.productos = producto;
