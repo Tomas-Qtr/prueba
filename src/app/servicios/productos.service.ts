@@ -25,14 +25,15 @@ export class ProductosService {
   this.coleccionProductos = db.collection('productos')
 
   }
-
-  createProducto(nuevoProducto:Producto){
+//agregamos "url:string"
+  createProducto(nuevoProducto:Producto, url:string){
     
     return new Promise(async (resolve, rejects)=>{
       try{
         const id = this.db.createId();
         nuevoProducto.idProdocto= id;
-    
+        //decimos que la url de firebase va a estar declarada en imagen
+        nuevoProducto.imagen=url;
         const respuesta= await this.coleccionProductos.doc(id).set(nuevoProducto);
         resolve(respuesta)
         }

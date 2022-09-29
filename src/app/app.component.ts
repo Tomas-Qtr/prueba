@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Producto } from './models/producto';
 import { ProductosService } from './servicios/productos.service';
+import { StorageService } from './servicios/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,10 @@ import { ProductosService } from './servicios/productos.service';
 
 export class AppComponent implements OnInit{
 
-  imagen:string;
+  habilitaBoton=true;
 
+  imagen:string;
+  nombreImagen:string
   title = 'ctrdymas';
 
 //la variable que vamoas a usar para cambiar el boton agrgar/editar
@@ -27,11 +30,10 @@ export class AppComponent implements OnInit{
     nombre: new FormControl('',Validators.required),
     precio: new FormControl(0,Validators.required),
     descripcion: new FormControl('',Validators.required),
-    imagen: new FormControl('', Validators.required)
 
   })
   productos:Producto[];
-  constructor(private servicioProductos:ProductosService ){
+  constructor(private servicioProductos:ProductosService, private servicioStrorage:StorageService ){
  //dnhdjfhdf
   }
 
@@ -47,16 +49,29 @@ export class AppComponent implements OnInit{
       nombre: this.nuevosproducts.value.nombre,
       precio: this.nuevosproducts.value.precio,
       descripcion:this.nuevosproducts.value.descripcion,
-      imagen:this.nuevosproducts.value.imagen,
+      imagen:"",
       idProdocto:""
     } 
-      //declaramos la variable en el parametro
-      this.servicioProductos.createProducto(nuevosProductos).then(producto=>{
-        alert("Producto agregado con exito")
-      })
-      .catch(error=>{
-        alert("ocurrio un error\nError: "+ error)
-      })
+    //storage para subir la imagen a la base de datos e firebase y que se muestra en la pagina
+      this.servicioStrorage.subirImagen(this.nombreImagen, this.imagen)
+      .then(
+        async res=>{
+          this.servicioStrorage.obtenerUrlImagen(res)
+          .then(
+            async url =>{
+               //declaramos la variable en el parametro
+              this.servicioProductos.createProducto(nuevosProductos, url).then(producto=>{
+                alert("Producto agregado con exito")
+              })
+              .catch(error=>{
+                alert("ocurrio un error\nError: "+ error)
+              })
+                                                        
+            }
+          )
+        }
+      )
+     
     }
     else{
       alert("Hay campos vacios")
@@ -70,7 +85,7 @@ export class AppComponent implements OnInit{
     nombre: this.nuevosproducts.value.nombre,
     precio: this.nuevosproducts.value.precio,
     descripcion:this.nuevosproducts.value.descripcion,
-    imagen:this.nuevosproducts.value.imagen,
+    imagen:"",
     idProdocto:this.productoselecionado.idProdocto
   } 
     //
@@ -125,6 +140,13 @@ export class AppComponent implements OnInit{
     })
   }
 
+  //
+
+  habilitarBoton(){
+    this.habilitaBoton=!this.habilitaBoton;
+  }
+
+
   cargarImagen(event:any){
     let archivo = event.target.files[0]
     let reader = new FileReader()
@@ -133,6 +155,7 @@ export class AppComponent implements OnInit{
       reader.onloadend = () =>{
         let url = reader.result
         if (url!=null){
+          this.nombreImagen= archivo.name
           this.imagen =url.toString()
         }
       }

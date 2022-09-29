@@ -2,7 +2,7 @@
 
 
 <div class="container mt-5">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
        Agregar Producto
       </button>
       
@@ -57,7 +57,7 @@
     <div class="row">
         <div *ngFor="let producto of productos" class="col">
             <div class="card" style="width: 18rem;">
-              <img src={{producto.imagen}} class="card-img-top" alt="...">
+              <img src={{producto.imagen}} class="card-img-top" alt="..." >
                 <div class="card-body">
                   <h5 class="card-title">{{producto.nombre}}</h5>
                   <h6 class="card-subtitle mb-2 text-muted">{{producto.precio}}</h6>
