@@ -131,12 +131,15 @@ export class AppComponent implements OnInit{
   }
   //careamos la funcion que hace eliminar el producto vinculandoce con el servicio
   eliminarProducto(producto:Producto){
+
     this.productoselecionado = producto
-    this.servicioProductos.deleteProducto(this.productoselecionado.idProdocto).then((resp)=>{
+    this.servicioProductos.deleteProducto(producto.idProdocto)
+    .then((resp)=>{
+      this.servicioStrorage.deleteImagen(producto.imagen)
       alert('el producto fue eliminado con exito')
     })
     .catch((err)=>{
-      alert('no se pudo eliminar')
+      alert('no se pudo eliminar ' +err)
     })
   }
 
@@ -162,6 +165,7 @@ export class AppComponent implements OnInit{
     }
   }
   ngOnInit(): void {
+   
     this.servicioProductos.getProducto().subscribe(producto=>{
       this.productos = producto;
     })

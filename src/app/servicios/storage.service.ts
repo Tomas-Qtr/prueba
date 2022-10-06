@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {getStorage, uploadString, ref, UploadResult, getDownloadURL, } from "firebase/storage"
+import {getStorage, uploadString, ref, UploadResult, getDownloadURL, deleteObject, } from "firebase/storage"
 @Injectable({
   providedIn: 'root'
 })
@@ -28,5 +28,17 @@ export class StorageService {
 
   obtenerUrlImagen(respuesta:UploadResult){
     return getDownloadURL (respuesta.ref) //nos dvuelve la url de la imagen con firestore con la funcion "getDownloadURL"
+  }
+
+  deleteImagen(urlImagen:string){
+    let refenrenciaImagen = ref(this.storage, urlImagen)
+    deleteObject(refenrenciaImagen)
+    .then(resp =>{
+      alert("la imagen fue eliinada con exito")
+    })
+    .catch(err=>{
+      alert("no se pudo eliminar la imagen. Error: " +err)
+    })
+
   }
 }

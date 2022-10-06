@@ -64,7 +64,5 @@ export class ProductosService {
     
   }
 
-  cargarImagen(){
-    
-  }
+  
 }
